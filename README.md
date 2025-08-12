@@ -1,70 +1,50 @@
-# Getting Started with Create React App
+# 이옷나줘 (give me this outfit) 👗
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+유튜브 썸네일 기반 AI 패션 스타일 추천 서비스  
+팀명: **이옷나줘** | 팀원: 최민동(팀장), 김민정(풀스택), 양도경(데이터 전처리)
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 📖 프로젝트 소개
+이옷나줘는 사용자가 선택한 **상황·만남·계절**을 기반으로  
+유튜브 쇼츠 영상을 추천하고, 해당 스타일과 유사한 무신사 상품을 추천하는 서비스입니다.  
+챗봇, 스타일 월드컵, 트렌드별 AI 추천 등 다양한 기능을 통해 개인 맞춤형 패션 경험을 제공합니다.
 
-### `npm start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 🚀 주요 기능
+- **유튜브 썸네일 기반 AI 스타일 분석** (24개 패션 카테고리)
+- **무신사 상품 추천** (실시간 크롤링)
+- **상황별/트렌드별 추천** (에겐녀, 테토녀 등 인기 밈 반영)
+- **스타일 월드컵** (데이터 기반 선호 스타일 분석)
+- **AI 챗봇** (패션 Q&A)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## 🛠 기술 스택
+**Frontend**
+- React.js, React Router, Framer Motion, Bootstrap, CSS
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+**Backend**
+- (추가 예정)
 
-### `npm run build`
+**AI & Data**
+- CNN 기반 스타일 분류 모델 (K-Fashion 데이터셋 학습)
+- YouTube Data API
+- 무신사 크롤링
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 📦 설치 및 실행
+```bash
+# 1. 저장소 클론
+git clone https://github.com/username/e-otna.git
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+# 2. 디렉토리 이동
+cd e-otna
 
-### `npm run eject`
+# 3. 패키지 설치
+npm install
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+# 4. 개발 서버 실행
+npm start
