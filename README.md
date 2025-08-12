@@ -13,7 +13,7 @@
 ---
 
 ## 🚀 주요 기능
-- **유튜브 썸네일 기반 AI 스타일 분석** (24개 패션 카테고리)
+- **유튜브 썸네일 기반 AI 스타일 분석** 
 - **무신사 상품 추천** (실시간 크롤링)
 - **상황별/트렌드별 추천** (에겐녀, 테토녀 등 인기 밈 반영)
 - **스타일 월드컵** (데이터 기반 선호 스타일 분석)
@@ -38,10 +38,10 @@
 ## 📦 설치 및 실행
 ```bash
 # 1. 저장소 클론
-git clone https://github.com/username/e-otna.git
+git clone https://github.com/username/givemethisoutfit.git
 
 # 2. 디렉토리 이동
-cd e-otna
+cd givemethisoutfit
 
 # 3. 패키지 설치
 npm install
