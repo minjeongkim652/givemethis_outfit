@@ -1,0 +1,9 @@
+Flask # 웹서버 기본 프레임워크
+requests # HTTP 요청(이미지, API 호출 등)
+pillow # 이미지 처리 라이브러리
+beautifulsoup4 # HTML 파싱(무신사 크롤링)
+selenium # 크롬 브라우저 자동화
+numpy # 수치 연산 처리
+tensorflow # TFLite 모델 로드/추론
+google-api-python-client # 유튜브 API 호출
+pandas # CSV 처리 및 데이터 분석
