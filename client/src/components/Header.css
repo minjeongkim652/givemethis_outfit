@@ -1,0 +1,55 @@
+.main-header {
+    background-color: #6ba2f6;
+    color: white;
+    padding: 0 40px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    height: 70px;
+}
+
+.header-container {
+    display: flex;
+
+    margin-left: auto;
+    align-items: center;
+    height: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* 로고 이미지 크기 조절 */
+.headerlogo {
+    position: absolute; /* 또는 relative */
+    left: 25px; /* 왼쪽으로 10px 이동 */
+    height: 40px; /* 로고 크기 조절 */
+
+    width: auto;
+    cursor: pointer;
+}
+
+.logo-link {
+    display: flex;
+    align-items: center;
+}
+
+/* 네비게이션 메뉴 */
+.navigation {
+    position: absolute; /* 또는 relative */
+    right: 25px; /* 왼쪽으로 10px 이동 */
+    margin-left: auto; /* 여기가 핵심 */
+    display: flex;
+    gap: 20px;
+    font-weight: 500;
+}
+
+.navigation a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 5px 10px;
+    border-radius: 6px;
+    transition: background-color 0.3s;
+}
+
+.navigation a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
