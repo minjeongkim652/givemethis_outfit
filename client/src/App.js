@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import StartPage from './pages/StartPage';
 import Question from './pages/Question';
+import About from './pages/About'; // Import the new component
 
 import Main from './pages/Main';
 import WorldCup from './pages/Worldcup';
@@ -11,12 +11,12 @@ function App() {
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<StartPage />} />
+                <Route path="/" element={<Question />} />
                 <Route path="/Main" element={<Main />} />
-                <Route path="/Question" element={<Question />} />
                 <Route path="/Worldcup" element={<WorldCup />} />
                 <Route path="/Testo" element={<Testo />} />
                 <Route path="/Chat" element={<Chat />} />
+                <Route path="/about" element={<About />} /> {/* Add the new route */}
             </Routes>
         </Router>
     );

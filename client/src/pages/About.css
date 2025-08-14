@@ -1,0 +1,50 @@
+.about-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.95); /* 살짝 투명한 검은색 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    padding: 40px;
+    box-sizing: border-box;
+}
+
+.about-content {
+    max-width: 800px;
+}
+
+.about-content h1 {
+    font-size: 3rem;
+    margin-bottom: 30px;
+}
+
+.about-content p {
+    font-size: 1.2rem;
+    line-height: 1.8;
+}
+
+.close-button {
+    position: absolute;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%); /* 수평 중앙 정렬 */
+    background: none;
+    border: none;
+    color: white;
+    font-size: 15rem; /* 아주 큰 X */
+    font-weight: 100; /* 가장 얇은 두께 */
+    cursor: pointer;
+    line-height: 1;
+    transition: transform 0.2s ease-in-out;
+}
+
+.close-button:hover {
+    transform: translateX(-50%) scale(1.2); /* 기존 중앙 정렬 유지하며 커지게 */
+}
