@@ -2,6 +2,7 @@ import os
 import shutil
 import time
 import requests
+import random
 from io import BytesIO
 from PIL import Image
 from bs4 import BeautifulSoup
@@ -22,7 +23,7 @@ CORS(app) # CORS 설정
 # 경로 설정
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 CHROME_DRIVER_PATH = os.path.join(BASE_DIR, "chromedriver.exe")
-TFLITE_MODEL_PATH = os.path.join(BASE_DIR, "NO1model.tflite")
+TFLITE_MODEL_PATH = os.path.join(BASE_DIR, "fashion8_2025-08-14_model.tflite")
 STATIC_DIR = os.path.join(BASE_DIR, "static")
 YOUTUBE_SAVE_DIR = os.path.join(STATIC_DIR, "youtube_thumbnails")
 MUSINSA_SAVE_DIR = os.path.join(STATIC_DIR, "musinsa_images")
@@ -33,29 +34,31 @@ os.makedirs(MUSINSA_SAVE_DIR, exist_ok=True)
 
 # 스타일 클래스 목록
 class_names = [
-    "Others", "Retro", "Romantic", "Resort", "Manish", "Modern", "Military", "Sexy", "Sophisticated",
-    "Street", "Sporty", "Avant-garde", "Oriental", "Western", "Genderless", "Country",
-    
-    "Classic", "Kitsch", "Tomboy", "Punk", "Feminine", "Preppy", "Hippie", "Hip-hop"
+    "feminin","natural","chic","casual","sporty","street","classic","retro"
 ]
 
 def predict_style_on_image(img):
     interpreter = tf.lite.Interpreter(model_path=TFLITE_MODEL_PATH)
     interpreter.allocate_tensors()
+
     input_details = interpreter.get_input_details()
     output_details = interpreter.get_output_details()
     input_dtype = input_details[0]['dtype']
+
     img_resized = img.resize((224, 224))
     img_np = np.array(img_resized)
+
     if input_dtype == np.float32:
         img_np = img_np.astype(np.float32) / 255.0
     elif input_dtype == np.uint8:
         img_np = img_np.astype(np.uint8)
     else:
         raise ValueError("지원하지 않는 입력 데이터 타입")
+    
     input_tensor = np.expand_dims(img_np, axis=0)
     interpreter.set_tensor(input_details[0]['index'], input_tensor)
     interpreter.invoke()
+
     output_data = interpreter.get_tensor(output_details[0]['index'])
     predicted_class = np.argmax(output_data)
     return class_names[predicted_class]
@@ -72,8 +75,10 @@ def search_youtube_and_predict_style(query, api_key, max_results=4):
         type="video",
         videoDuration="short"
     )
+
     response = search_request.execute()
     items = response.get("items", [])
+
     youtube_data = []
     styles_found = set()
     style_counts = Counter()
@@ -83,16 +88,20 @@ def search_youtube_and_predict_style(query, api_key, max_results=4):
         video_id = item["id"]["videoId"]
         title = item["snippet"]["title"]
         thumb_url = f"https://img.youtube.com/vi/{video_id}/hqdefault.jpg"
+
         try:
             response_img = requests.get(thumb_url, timeout=10)
             img = Image.open(BytesIO(response_img.content)).convert("RGB")
         except Exception as e:
             print(f"[썸네일 다운로드 실패] {e}")
             return None, None, None
+        
         predicted_style = predict_style_on_image(img)
+
         filename = f"{idx+1}_{video_id}.jpg"
         save_path = os.path.join(YOUTUBE_SAVE_DIR, filename)
         img.save(save_path)
+
         video_data = {
             'video_id': video_id,
             'title': title,
@@ -110,6 +119,7 @@ def search_youtube_and_predict_style(query, api_key, max_results=4):
                 styles_found.add(predicted_style)
                 if style_for_count:
                     style_counts[style_for_count] += 1
+                    
     update_style_counts(style_counts)
     return youtube_data, styles_found
 
@@ -133,11 +143,14 @@ def crawl_musinsa_images(max_items=300):
         "user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
         "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36"
     )
+
     service = Service(CHROME_DRIVER_PATH)
     driver = webdriver.Chrome(service=service, options=chrome_options)
+
     url = 'https://www.musinsa.com/main/outlet/ranking?storeCode=outlet&sectionId=233&contentsId=&categoryCode=107001&gf=F'
     driver.get(url)
     time.sleep(3)
+
     last_height = driver.execute_script("return document.body.scrollHeight")
     while True:
         driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
@@ -146,20 +159,26 @@ def crawl_musinsa_images(max_items=300):
         if new_height == last_height:
             break
         last_height = new_height
+
     soup = BeautifulSoup(driver.page_source, 'html.parser')
     driver.quit()
+
     product_anchors = soup.select('a[data-item-id]')
     results = []
+
     for idx, anchor in enumerate(product_anchors):
         if idx >= max_items:
             break
+
         link = anchor.get('href')
         full_link = 'https://www.musinsa.com' + link if link and link.startswith('/products') else link
+        
         img_tag = anchor.find('img')
         if img_tag and img_tag.has_attr('src'):
             img_url = img_tag['src']
             if img_url.startswith('//'):
                 img_url = 'https' + img_url
+
             try:
                 response = requests.get(img_url, timeout=10)
                 response.raise_for_status()
@@ -179,6 +198,7 @@ def crawl_musinsa_images(max_items=300):
 def filter_musinsa_by_styles(musinsa_data, styles_set):
     import concurrent.futures
     filtered = []
+
     def process_item(item):
         try:
             image_full_path = os.path.join(BASE_DIR, item['image_path'].strip("/"))
@@ -221,8 +241,56 @@ def rank():
 @app.route("/api/process", methods=['POST'])
 def process():
     data = request.get_json()
-    query = f"{data.get('occasion', '데일리')}룩"
+    occasion = data.get('occasion')
+    season = data.get('season')
+
+    # '약속'은 '데이트'로 처리하여 검색어 생성
+    if occasion == '약속':
+        occasion = '데이트'
+
+    query_map = {
+        '데일리': {
+            '봄': ['봄데일리룩', '봄일상룩', '봄개강룩'],
+            '여름': ['여름데일리룩', '여름일상룩', '여름개강룩'],
+            '가을': ['가을데일리룩', '가을일상룩', '가을개강룩'],
+            '겨울': ['겨울데일리룩', '겨울일상룩', '겨울개강룩']
+        },
+        '격식': {
+            '봄': ['봄하객룩', '봄직장인코디', '봄직장인 룩북', '봄출근룩'],
+            '여름': ['여름하객룩', '여름직장인코디', '여름직장인 룩북', '여름출근룩'],
+            '가을': ['가을하객룩', '가을직장인코디', '가을직장인 룩북', '가을출근룩'],
+            '겨울': ['겨울하객룩', '겨울직장인코디', '겨울직장인 룩북', '겨울출근룩']
+        },
+        '운동': {
+            '봄': ['봄여자 운동복', '봄여자 등산복', '봄여자 런닝복', '애슬레저룩'],
+            '여름': ['여름여자 운동복', '여름여자 등산복', '여름여자 런닝복'],
+            '가을': ['가을여자 운동복', '가을여자 등산복', '가을여자 런닝복'],
+            '겨울': ['겨울여자 운동복', '겨울여자 등산복', '겨울여자 런닝복']
+        },
+        '휴가': {
+            '봄': ['봄여행룩', '봄여행코디'],
+            '여름': ['여름여행룩', '여름여행코디', '동남아 여행 코디', '동남아 여행룩'],
+            '가을': ['가을여행룩', '가을여행코디'],
+            '겨울': ['겨울여행룩', '겨울여행코디', '삿포로 여행 코디', '삿포로 여행룩']
+        },
+        '데이트': {
+            '봄': ['봄 데이트룩', '봄 번따룩', '봄 꾸꾸꾸', '벛꽃 데이트룩', '벛꽃놀이코디'],
+            '여름': ['여름데이트룩', '여름번따룩', '여름꾸꾸꾸', '여름페스티벌룩'],
+            '가을': ['가을데이트룩', '가을번따룩', '가을꾸꾸꾸', '가을수학여행코디'],
+            '겨울': ['겨울데이트룩', '겨울번따룩', '겨울꾸꾸꾸', '연말룩', '연말코디']
+        }
+    }
+
+    query_list = query_map.get(occasion, {}).get(season)
     
+    if not query_list:
+        # 기본 검색어 설정
+        query = f"{season or ''}{occasion or '데일리'}룩"
+    else:
+        query = random.choice(query_list)
+
+    print(f"선택된 랜덤 검색어: {query}")
+
     if not query.strip():
         return jsonify({"error": "검색어가 없습니다."}), 400
 
@@ -235,7 +303,7 @@ def process():
 
     YOUTUBE_API_KEY = "AIzaSyBeW1ruF8GdOZC3f6pU2B_8glHuMzgstQk" # 키는 별도 관리 필요
     youtube_results, youtube_styles = search_youtube_and_predict_style(query, YOUTUBE_API_KEY)
-    musinsa_data = crawl_musinsa_images(max_items=100)
+    musinsa_data = crawl_musinsa_images(max_items=300)
     matched_musinsa = filter_musinsa_by_styles(musinsa_data, youtube_styles)
     
     return jsonify({
