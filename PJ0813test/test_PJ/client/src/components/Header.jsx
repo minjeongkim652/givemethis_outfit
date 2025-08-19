@@ -4,14 +4,20 @@ import './Header.css';
 
 const Header = () => (
     <header className="main-header">
-        <div className="header-container">
-            <Link to="/Main" className="logo-link">
-                <img src="/imsilogo.png" alt="로고" className="headerlogo" />
-            </Link>
-            <nav className="navigation">
-                <Link to="/worldcup">스타일 월드컵</Link> | <Link to="/testo">에겐테토녀</Link> |{' '}
+        <div className="top-nav">
+            <div className="nav-left">
+                <Link to="/about">About</Link>
+            </div>
+            <div className="nav-right">
+                <Link to="/worldcup">스타일 월드컵</Link>
+                <Link to="/testo">에겐테토녀</Link>
                 <Link to="/chat">챗봇</Link>
-            </nav>
+            </div>
+        </div>
+        <div className="logo-container">
+            <Link to="/Main">
+                <img src="/logo2.jpg" alt="로고" className="main-logo" />
+            </Link>
         </div>
     </header>
 );

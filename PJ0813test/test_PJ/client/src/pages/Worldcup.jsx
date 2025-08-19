@@ -1,7 +1,9 @@
 // src/pages/WorldcupPage.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Header from '../components/Header';
 // import stylesData from '../data/stylesData'; // 나중에 스타일 데이터 추가할 곳
+
 
 const dummyStyles = [
     { id: 1, name: '스타일1', image: '' }, // 이미지 URL 나중에 추가
@@ -52,7 +54,10 @@ function WorldcupPage() {
     if (!style1 || !style2) return <div>로딩 중...</div>;
 
     return (
-        <div style={{ textAlign: 'center', padding: '40px' }}>
+        <>
+     <Header />
+        <div style={{ textAlign: 'center', padding: '40px' }}> 
+         
             <h1>스타일 월드컵</h1>
             <p>원하는 스타일을 선택해주세요!</p>
 
@@ -93,6 +98,7 @@ function WorldcupPage() {
                 ))}
             </div>
         </div>
+     </>
     );
 }
 

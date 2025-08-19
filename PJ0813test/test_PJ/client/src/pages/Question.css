@@ -1,34 +1,37 @@
-/* CSS 변수를 사용하여 파란색 포인트 컬러를 정의합니다. */
 :root {
-    --point-blue: #007aff; /* iOS 스타일의 깔끔한 파란색 */
-    --light-gray: #f7f9fc;
-    --border-gray: #e1e4e8;
-    --text-dark: #2c3e50;
+    --background-color: #ffffff;
+    --text-color: #000000;
+    --border-color: #eeeeee;
+    --selected-background: #181717;
+    --selected-text: #ffffff;
+    --button-background: #181717;
+    --button-text: #ffffff;
+    --disabled-background: #cccccc;
 }
 
 .question-page-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    min-height: calc(100vh - 80px); /* Adjust based on header height */
     padding: 20px;
     box-sizing: border-box;
-    overflow-x: hidden; /* 슬라이드 애니메이션 시 가로 스크롤바 방지 */
-    background-color: var(--light-gray); /* 촌스럽지 않은 밝은 회색 배경 */
+    overflow-x: hidden;
+    background-color: var(--background-color);
 }
 
 .question-box {
     width: 100%;
-    max-width: 600px;
-    min-height: 500px;
-    background: white;
-    border-radius: 24px; /* 좀 더 부드러운 곡선 */
-    /* 부드럽고 세련된 그림자 효과 */
-    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08);
+    max-width: 1200px; /* Increased max-width */
+    min-height: 700px; /* Increased min-height */
+    background: var(--background-color);
+    border-radius: 24px;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--border-color);
     padding: 40px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center; /* Center content vertically */
 }
 
 .question-content {
@@ -36,109 +39,81 @@
 }
 
 .question-content h2 {
-    font-size: 2rem;
+    font-size: 2.2rem; /* Increased font size */
     font-weight: 600;
-    color: var(--text-dark);
-    margin-bottom: 40px;
+    color: var(--text-color);
+    margin-bottom: 80px; /* Increased margin */
+    text-align: center;
 }
 
 .options-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 20px;
+    gap: 30px; /* Increased gap */
 }
 
-/* Input Fields */
-.text-input {
-    width: 80%;
-    max-width: 250px;
-    padding: 15px;
-    font-size: 1rem;
-    border: 1px solid var(--border-gray);
-    border-radius: 12px;
-    text-align: center;
-    transition: border-color 0.3s, box-shadow 0.3s;
-}
-.text-input:focus {
-    outline: none;
-    border-color: var(--point-blue);
-    box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.15);
-}
-
-/* Image & Select Options (공통 스타일) */
-.image-option,
 .select-option {
-    border: 1px solid var(--border-gray);
-    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 20px; /* Increased border-radius */
     cursor: pointer;
     transition: all 0.2s ease-in-out;
-    background-color: #fff;
-    color: #333;
+    background-color: var(--background-color);
+    color: var(--text-color);
     font-weight: 500;
-}
-
-.image-option:hover,
-.select-option:hover {
-    transform: translateY(-3px);
-    border-color: var(--point-blue);
-    color: var(--point-blue);
-}
-
-.image-option.selected,
-.select-option.selected {
-    background-color: var(--point-blue);
-    color: white;
-    border-color: var(--point-blue);
-    transform: translateY(-3px) scale(1.03);
-    box-shadow: 0 4px 15px rgba(0, 122, 255, 0.2);
-}
-
-/* Image Options */
-.image-option {
-    width: 150px;
-    height: 150px;
+    padding: 30px; /* Increased padding */
+    font-size: 1.2rem; /* Increased font-size */
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    padding: 10px;
-    box-sizing: border-box;
-}
-.placeholder-image {
-    font-size: 1.1rem;
+    gap: 20px; /* Increased gap */
+    width: 180px; /* Increased width */
 }
 
-/* Select Options */
-.select-option {
-    padding: 15px 30px;
-    font-size: 1rem;
+.option-image {
+    width: 140px; /* Increased width */
+    height: 140px; /* Increased height */
+    object-fit: cover;
+    border-radius: 16px; /* Increased border-radius */
 }
 
-/* Next Button */
+.select-option:hover {
+    transform: translateY(-5px);
+    border-color: var(--text-color);
+}
+
+.select-option.selected {
+    background-color: var(--selected-background);
+    color: var(--selected-text);
+    border-color: var(--selected-background);
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
 .next-button {
-    width: 100%;
-    padding: 20px;
-    margin-top: 40px;
-    font-size: 1.2rem;
+    width: 200px; /* Decreased width */
+    padding: 15px; /* Decreased padding */
+    margin: 50px auto 0; /* Increased top margin and centered */
+    font-size: 1.1rem;
     font-weight: bold;
-    color: white;
-    background-color: var(--point-blue);
+    color: var(--button-text);
+    background-color: var(--button-background);
     border: none;
-    border-radius: 15px;
+    border-radius: 12px;
     cursor: pointer;
     transition: background-color 0.2s, transform 0.2s;
+    display: block;
 }
 .next-button:hover:not(:disabled) {
-    background-color: #0062cc; /* 더 진한 파란색 */
+    opacity: 0.8;
     transform: scale(1.02);
 }
 .next-button:disabled {
-    background-color: #b0b0b0;
+    background-color: var(--disabled-background);
     cursor: not-allowed;
     transform: none;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
     .question-box {
         padding: 20px;
@@ -148,11 +123,18 @@
     .question-content h2 {
         font-size: 1.5rem;
     }
-    .image-option {
-        width: 120px;
-        height: 120px;
-    }
     .options-container {
         gap: 15px;
+    }
+    .select-option {
+        width: 150px; /* Adjusted for smaller screens */
+        padding: 20px;
+    }
+    .option-image {
+        width: 100px; /* Adjusted for smaller screens */
+        height: 100px;
+    }
+    .next-button {
+        width: 150px; /* Adjusted for smaller screens */
     }
 }

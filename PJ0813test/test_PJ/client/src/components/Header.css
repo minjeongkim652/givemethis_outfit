@@ -1,55 +1,56 @@
 .main-header {
-    background-color: #6ba2f6;
-    color: white;
-    padding: 0 40px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    height: 70px;
-}
-
-.header-container {
+    background-color: #ffffff;
+    color: #000000;
+    padding: 10px 40px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     display: flex;
-
-    margin-left: auto;
+    flex-direction: column;
     align-items: center;
-    height: 100%;
-    max-width: 1400px;
-    margin: 0 auto;
+    height: auto;
 }
 
-/* 로고 이미지 크기 조절 */
-.headerlogo {
-    position: absolute; /* 또는 relative */
-    left: 25px; /* 왼쪽으로 10px 이동 */
-    height: 40px; /* 로고 크기 조절 */
-
-    width: auto;
-    cursor: pointer;
-}
-
-.logo-link {
+.top-nav {
+    width: 100%;
     display: flex;
+    justify-content: space-between;
     align-items: center;
+    margin-bottom: 15px;
 }
 
-/* 네비게이션 메뉴 */
-.navigation {
-    position: absolute; /* 또는 relative */
-    right: 25px; /* 왼쪽으로 10px 이동 */
-    margin-left: auto; /* 여기가 핵심 */
+.nav-left, .nav-right {
     display: flex;
     gap: 20px;
-    font-weight: 500;
+    align-items: center;
 }
 
-.navigation a {
-    color: white;
+.top-nav a {
+    color: #000000;
     text-decoration: none;
-    font-size: 16px;
-    padding: 5px 10px;
-    border-radius: 6px;
-    transition: background-color 0.3s;
+    font-size: 15px;
+    font-weight: 400; /* 얇게 변경 */
+    transition: all 0.2s ease-in-out; /* 부드러운 전환 효과 */
 }
 
-.navigation a:hover {
-    background-color: rgba(255, 255, 255, 0.2);
+.top-nav a:hover {
+    color: #000000;
+    transform: scale(1.5); /* 마우스 올리면 커지게 */
+}
+
+.logo-container {
+    padding: 10px 0;
+}
+
+.main-logo {
+    height: 170px; /* 로고 엄청 크게 */
+    width: auto;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+/* .main-logo:hover {
+    transform: scale(1.05);
+} */
+
+.header-container, .navigation, .navigation2, .headerlogo, .logo-link {
+    /* 이전 스타일 초기화 */
 }
