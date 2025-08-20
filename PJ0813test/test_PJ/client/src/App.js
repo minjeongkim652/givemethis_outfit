@@ -4,9 +4,11 @@ import About from './pages/About';
 
 import Main from './pages/Main';
 import WorldCup from './pages/Worldcup';
-import Testo from './pages/Testo';
+import Testo from './pages/testo/Testo';
 import Chat from './pages/Chat';
 import Loading from './pages/Loading';
+import Result from './pages/testo/Result';
+
 
 function App() {
     return (
@@ -17,6 +19,7 @@ function App() {
                 <Route path="/Main" element={<Main />} />
                 <Route path="/Worldcup" element={<WorldCup />} />
                 <Route path="/Testo" element={<Testo />} />
+                <Route path="/testo/Result" element={<Result />} />
                 <Route path="/Chat" element={<Chat />} />
                 <Route path="/about" element={<About />} /> 
             </Routes>

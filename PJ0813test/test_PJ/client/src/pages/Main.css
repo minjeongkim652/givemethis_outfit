@@ -176,6 +176,214 @@
     font-size: 14px;
 }
 
+/* Main.css */
+.content-area {
+    padding: 20px 40px;
+    background-color: #ffffff; /* White background */
+}
+
+.filter-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f9f9f9; /* Light gray background for filter */
+    padding: 20px 30px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    border: 1px solid #eee;
+}
+
+.filter-controls {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.filter-group strong {
+    font-weight: 600;
+    font-size: 1rem;
+    color: #000; /* Black text */
+}
+
+.checkbox-options {
+    display: flex;
+    gap: 10px;
+}
+
+.checkbox-options label {
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    border: 1px solid #000; /* Black border */
+    background-color: #fff; /* White background */
+    color: #000; /* Black text */
+}
+
+.checkbox-options label.selected {
+    background-color: #000; /* Black background for selected */
+    color: #fff; /* White text for selected */
+    border-color: #000;
+}
+
+.checkbox-options input[type="radio"] {
+    display: none;
+}
+
+.filter-separator {
+    width: 1px;
+    height: 50px;
+    background-color: #ddd;
+}
+
+.research-button {
+    padding: 12px 30px;
+    border: none;
+    border-radius: 8px;
+    background-color: #000;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.research-button:hover {
+    opacity: 0.8;
+}
+
+.youtube-section h3,
+.musinsa-section h3 {
+    color: #000000;
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #eee;
+    text-align: center;
+}
+
+.youtube-carousel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.arrow-button {
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.arrow-button:hover {
+    background-color: #333;
+}
+
+.arrow-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.video-grid, .item-grid {
+    display: grid;
+    gap: 25px;
+    padding: 20px;
+    border-radius: 12px;
+    background-color: #fff;
+}
+
+.video-grid {
+    grid-template-columns: repeat(6, 1fr); /* Always 6 columns */
+    width: 100%;
+    overflow: hidden;
+}
+
+.item-grid {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+}
+
+.item-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    text-align: left;
+    transition: all 0.3s ease;
+    border: 1px solid #e7e7e7;
+}
+
+.item-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+}
+
+.item-card img {
+    width: 100%;
+    display: block;
+}
+
+.youtube-card img {
+    aspect-ratio: 9 / 16;
+    object-fit: cover;
+}
+
+.item-grid .item-card img {
+    aspect-ratio: 1 / 1.2;
+    object-fit: cover;
+}
+
+.item-card p {
+    margin: 0;
+    padding: 12px 15px;
+    font-weight: 600;
+    color: #333;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.item-card p:last-child {
+    color: #777;
+    font-size: 0.8rem;
+    font-weight: normal;
+}
+
+.category-filters {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.category-button {
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    border: 1px solid #000;
+    background-color: #fff;
+    color: #000;
+    font-size: 14px;
+}
+
 .category-button.active {
     background-color: #000;
     color: #fff;

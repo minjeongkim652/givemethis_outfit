@@ -19,34 +19,63 @@ const Main = () => {
     const [selectedFilters, setSelectedFilters] = useState({});    // 사용자가 선택한 필터값
     const [selectedMusinsaCategory, setSelectedMusinsaCategory] = useState('All'); // 무신사 카테고리 필터
     const [loading, setLoading] = useState(false);                 // 로딩 상태
+    const [youtubeStartIndex, setYoutubeStartIndex] = useState(0); // 유튜브 캐러셀 시작 인덱스
+
+    // 🔹 유튜브 캐러셀 네비게이션 핸들러
+    const handleYoutubeNext = () => {
+        if (youtubeStartIndex + 6 < youtubeResults.length) {
+            setYoutubeStartIndex(youtubeStartIndex + 6);
+        }
+    };
+
+    const handleYoutubePrev = () => {
+        if (youtubeStartIndex - 6 >= 0) {
+            setYoutubeStartIndex(youtubeStartIndex - 6);
+        }
+    };
 
     // 🔹 컴포넌트가 처음 렌더링되었을 때 실행
     useEffect(() => {
-        // 이전 페이지(Loading 등)에서 넘어온 데이터 받기
-        const { results, answers, error: fetchError } = location.state || {};
+        // 세션 스토리지에서 데이터 먼저 확인
+        const cachedResults = sessionStorage.getItem('recommendationResults');
+        const cachedAnswers = sessionStorage.getItem('recommendationAnswers');
 
-        console.log("Received data from Loading page:", location.state);
+        if (cachedResults && cachedAnswers) {
+            const results = JSON.parse(cachedResults);
+            const answers = JSON.parse(cachedAnswers);
 
-        if (fetchError) {
-            setError(fetchError); // 에러가 있으면 상태에 저장
-        } else if (results) {
-            // 정상적으로 데이터가 있으면 각각 저장
-            console.log("YouTube Results:", results.youtube_results);
-            console.log("Musinsa Results:", results.musinsa_results);
             setYoutubeResults(results.youtube_results || []);
             setMusinsaResults(results.musinsa_results || []);
-        }
-
-        // 필터 초기값 세팅 (사용자가 이전에 선택했던 답변)
-        if (answers) {
             setSelectedFilters({
                 when: answers.season,
                 where: answers.occasion,
                 who: answers.appointmentType || answers.company,
             });
-        } else if (!results) {
-            // 아무 데이터도 없으면 에러 처리
-            setError('추천 데이터가 없습니다. 시작 페이지로 돌아가 다시 시도해주세요.');
+
+        } else {
+            // 이전 페이지(Loading 등)에서 넘어온 데이터 받기
+            const { results, answers, error: fetchError } = location.state || {};
+
+            if (fetchError) {
+                setError(fetchError); // 에러가 있으면 상태에 저장
+            } else if (results) {
+                // 정상적으로 데이터가 있으면 각각 저장하고 세션 스토리지에 저장
+                setYoutubeResults(results.youtube_results || []);
+                setMusinsaResults(results.musinsa_results || []);
+                sessionStorage.setItem('recommendationResults', JSON.stringify(results));
+
+                if (answers) {
+                    setSelectedFilters({
+                        when: answers.season,
+                        where: answers.occasion,
+                        who: answers.appointmentType || answers.company,
+                    });
+                    sessionStorage.setItem('recommendationAnswers', JSON.stringify(answers));
+                }
+            } else {
+                // 아무 데이터도 없으면 에러 처리
+                setError('추천 데이터가 없습니다. 시작 페이지로 돌아가 다시 시도해주세요.');
+            }
         }
     }, [location.state]);
 
@@ -87,6 +116,10 @@ const Main = () => {
             const data = await response.json();
             setYoutubeResults(data.youtube_results || []);
             setMusinsaResults(data.musinsa_results || []);
+
+            // 세션 스토리지에도 새로운 결과 저장
+            sessionStorage.setItem('recommendationResults', JSON.stringify(data));
+            sessionStorage.setItem('recommendationAnswers', JSON.stringify(answers));
         } catch (err) {
             setError(err.message); // 에러 발생 시 표시
         } finally {
@@ -175,8 +208,14 @@ const Main = () => {
                 {/* 🔹 로딩 중이면 스피너 */}
                 {loading ? (
                     <div className="loading-container">
-                        <div className="spinner"></div>
-                        <p>AI가 당신을 위한 스타일을 찾고 있어요...</p>
+                        <video 
+                            src="/loading.mp4"   // public 폴더에 넣은 영상 경로
+                            autoPlay
+                            loop
+                            muted
+                            style={{ width: '400px', height: '400px' }}
+                        />
+                        <p style={{ marginTop: '20px' }}>AI가 당신을 위한 스타일을 찾고 있어요...</p>
                     </div>
                 ) : (
                     !error && (
@@ -184,27 +223,43 @@ const Main = () => {
                             {/* 🔹 유튜브 추천 섹션 */}
                             <section className="youtube-section">
                                 <h3>추천 유튜브</h3>
-                                <div className="video-grid">
-                                    {youtubeResults.length > 0 ? (
-                                        youtubeResults.map((video, index) => (
-                                            <a 
-                                                key={index} 
-                                                href={`https://www.youtube.com/watch?v=${video.video_id}`} 
-                                                target="_blank" 
-                                                rel="noopener noreferrer"
-                                            >
-                                                <div className="item-card youtube-card">
-                                                    <img 
-                                                        src={`http://localhost:5000${video.thumbnail_path}`} 
-                                                        alt={video.title} 
-                                                    />
-                                                    <p>{video.style}</p>
-                                                </div>
-                                            </a>
-                                        ))
-                                    ) : (
-                                        <p>추천 유튜브 영상을 찾지 못했습니다.</p>
-                                    )}
+                                <div className="youtube-carousel">
+                                    <button 
+                                        className="arrow-button prev-button" 
+                                        onClick={handleYoutubePrev} 
+                                        disabled={youtubeStartIndex === 0}
+                                    >
+                                        &#10094;
+                                    </button>
+                                    <div className="video-grid">
+                                        {youtubeResults.length > 0 ? (
+                                            youtubeResults.slice(youtubeStartIndex, youtubeStartIndex + 6).map((video, index) => (
+                                                <a
+                                                    key={index}
+                                                    href={`https://www.youtube.com/watch?v=${video.video_id}`}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                >
+                                                    <div className="item-card youtube-card">
+                                                        <img
+                                                            src={`http://localhost:5000${video.thumbnail_path}`}
+                                                            alt={video.title}
+                                                        />
+                                                        <p>{video.style}</p>
+                                                    </div>
+                                                </a>
+                                            ))
+                                        ) : (
+                                            <p>추천 유튜브 영상을 찾지 못했습니다.</p>
+                                        )}
+                                    </div>
+                                    <button 
+                                        className="arrow-button next-button" 
+                                        onClick={handleYoutubeNext} 
+                                        disabled={youtubeStartIndex + 6 >= youtubeResults.length}
+                                    >
+                                        &#10095;
+                                    </button>
                                 </div>
                             </section>
 

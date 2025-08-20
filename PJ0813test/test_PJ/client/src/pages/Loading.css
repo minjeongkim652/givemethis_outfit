@@ -1,28 +1,24 @@
 .loading-container {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: center; /* 중앙 정렬 */
     justify-content: center;
-    height: 100vh;
-    background-color: #fff;
+    height: 100vh; /* 화면 전체 높이 */
+    gap: 20px; /* 영상과 텍스트 사이 간격 */
 }
 
-.loading-container p {
-    margin-top: 20px;
-    font-size: 1.2rem;
-    color: #333;
+.loading-video {
+    width: 600px; /* 원하는 크기 */
+    height: 600px;
+    object-fit: contain;
+    display: block; /* 크기 적용 보장 */
 }
 
-.spinner {
-    border: 8px solid #f3f3f3; /* Light grey */
-    border-top: 8px solid #000; /* Black */
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    animation: spin 1s linear infinite;
-}
 
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+
+.loading-text {
+    font-size: 18px;
+    font-weight: 500;
+    text-align: center;
+    margin: 0; /* 텍스트 바로 아래 붙이기 */
 }
