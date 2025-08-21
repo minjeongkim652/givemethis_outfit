@@ -7,3 +7,5 @@ numpy # 수치 연산 처리
 tensorflow # TFLite 모델 로드/추론
 google-api-python-client # 유튜브 API 호출
 pandas # CSV 처리 및 데이터 분석
+# pip install pillow beautifulsoup4 selenium numpy tensorflow flask pandas flask-cors requests
+
