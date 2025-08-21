@@ -14,21 +14,30 @@ const Testo = () => {
 
         setLoading(true);
 
-        // Simulate API call
-        setTimeout(() => {
-            const aegen_p = Math.floor(Math.random() * 50) + 50;
-            const results = {
-                aegen: aegen_p,
-                teto: 100 - aegen_p,
-            };
+        const formData = new FormData();
+        formData.append('file', uploadedFile);
 
+        fetch('http://localhost:5000/api/testo', {
+            method: 'POST',
+            body: formData,
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                throw new Error(data.error);
+            }
             navigate('/testo/result', { 
                 state: { 
                     imagePreview: uploadedFile.preview,
-                    results: results 
+                    results: data 
                 } 
             });
-        }, 2500); // Loading time 2.5s
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            setLoading(false);
+            // You might want to show an error message to the user here
+        });
     }, [uploadedFile, navigate]);
 
     useEffect(() => {

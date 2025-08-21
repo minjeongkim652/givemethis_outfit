@@ -9,6 +9,7 @@ const Header2 = () => (
                 <Link to="/about">About</Link>
             </div>
             <div className="nav-right">
+                 <Link to="/rank">랭킹</Link>
                 <Link to="/worldcup">스타일 월드컵</Link>
                 <Link to="/testo">에겐테토녀</Link>
                 <Link to="/chat">챗봇</Link>

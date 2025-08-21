@@ -36,12 +36,13 @@
 .result-analysis-container {
     width: 60%;
     text-align: left;
+    font-size: 1.5rem;
 }
 
 .result-analysis-container h2 {
-    font-size: 2rem;
-    font-weight: bold;
+    font-size: 1.5rem;
     margin-bottom: 30px;
+     font-weight: normal; 
 }
 
 .percentage-bar {
@@ -66,12 +67,13 @@
 }
 
 .aegen-bar {
-    background-color: #000; /* Black for Aegen */
+    background-color: #ffffff; /* Black for Aegen */ 
+    color: #000000;
 }
 
 .teto-bar {
-    background-color: #ccc; /* Light gray for Teto */
-    color: #000;
+    background-color: #000000; /* Light gray for Teto */
+   color: hsl(0, 0%, 100%);
 }
 
 .result-summary {
@@ -87,8 +89,8 @@
 }
 
 .result-summary .highlight {
-    background-color: #000;
-    color: #fff;
+  
+    color: #000000;
 }
 
 .retry-button {

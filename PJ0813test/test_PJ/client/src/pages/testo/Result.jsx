@@ -39,16 +39,16 @@ const Result = () => {
                         <h2>당신의 스타일은...</h2>
                         <div className="percentage-bar">
                             <div className="aegen-bar" style={{ width: `${aegen}%` }}>
-                                <span>에겐 {aegen}%</span>
+                                <span>에겐{aegen}%</span>
                             </div>
                             <div className="teto-bar" style={{ width: `${teto}%` }}>
-                                <span>테토 {teto}%</span>
+                                <span>테토{teto}%</span>
                             </div>
                         </div>
                         <div className="result-summary">
                             {aegen > teto ? 
-                                <p><span className="highlight">'에겐녀'</span> 스타일에 더 가깝습니다!</p> :
-                                <p><span className="highlight">'테토녀'</span> 스타일에 더 가깝습니다!</p>
+                                <p><span className="highlight">'에겐녀'</span>스타일에 더 가깝습니다!</p> :
+                                <p><span className="highlight">'테토녀'</span>스타일에 더 가깝습니다!</p>
                             }
                         </div>
                         <div className="button-container">

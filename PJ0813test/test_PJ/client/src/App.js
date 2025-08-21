@@ -8,6 +8,7 @@ import Testo from './pages/testo/Testo';
 import Chat from './pages/Chat';
 import Loading from './pages/Loading';
 import Result from './pages/testo/Result';
+import Rank from './pages/Rank';
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
                 <Route path="/testo/Result" element={<Result />} />
                 <Route path="/Chat" element={<Chat />} />
                 <Route path="/about" element={<About />} /> 
+                <Route path="/rank" element={<Rank />} />
             </Routes>
         </Router>
     );
